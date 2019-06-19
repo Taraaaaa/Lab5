@@ -7,41 +7,30 @@ public class Human implements livable
     private String name;
     private boolean sleepingState;
     private List <Object> belongings = new ArrayList<Object>();
-    private Place location;
+    private Place place;
     Memory memory = new Memory();
     
     public Human(){
     }
-    public Human setName(String name) throws NullPointerException
+    public Human setName(String name)
     {
-        if (name == null)
-        {
-            throw new NullPointerException("The name doesn't exist!");
-        }
-        else
-        {
-            this.name = name;
-            return this;
-        }
+        this.name = name;
+        return this;
     }
     public String getName()
     {
         return this.name;
     }
-    public Human setLocation(Place place) throws NullPointerException
+    public Human setPlace(Place place)
     {
-        if (place == null)
-        {
-            throw new NullPointerException("This place doesn't exist!");
-        }
-        this.location = place;
+        this.place = place;
         place.addPerson(this);
         System.out.println(this.getName()+ " is in "+place.getClass().getName());
         return this;
     }
-    public Place getLocation()
+    public Place getPlace()
     {
-        return location;
+        return place;
     }
     public void sleep()
     {
@@ -104,50 +93,26 @@ public class Human implements livable
     {
         return this.belongings;
     }
-    public String searchFor(Object object) throws NullPointerException
+    public String searchFor(Object object)
     {
-        if (object == null)
+        System.out.println(this.getName() + " is searching for "+ object.getClass().getName());
+        for(int i = 0;i < memory.getHasBeenTo().size(); i++)
         {
-            throw new NullPointerException("The object doesn't exist!");
+            Place p = memory.getHasBeenTo().get(i);
+            System.out.println(this.getName()+ " is thinking if he has put " + object.getClass().getName()+ " in "+ p.getClass().getName());
+            if (p.getObjects().contains(object))
+                return this.getName()+ " found " + object.getClass().getName()+ " in " + p.getClass().getName();
         }
-        else{
-            System.out.println(this.getName() + " is searching for "+ object.getClass().getName());
-            for(int i = 0;i < memory.getHasBeenTo().size(); i++)
-            {
-                Place p = memory.getHasBeenTo().get(i);
-                System.out.println(this.getName()+ " is thinking if he has put " + object.getClass().getName()+ " in "+ p.getClass().getName());
-                if (p.getObjects().contains(object))
-                    return this.getName()+ " found " + object.getClass().getName()+ " in " + p.getClass().getName();
-            }
-            return this.getName() + " did not find " + object.getClass().getName()+"!";
-        }   
+        return this.getName() + " did not find " + object.getClass().getName()+"!";   
     }
-    public void hasBeenTo(Vector <Place> places, Vector <LocalDateTime> dateTime) throws NullPointerException
+    public void hasBeenTo(Vector <Place> places, Vector <LocalDateTime> dateTime) 
     {
-        if(places == null)
-        {
-            throw new NullPointerException("The list of places doesn't exist!");
-        }
-        else if(dateTime == null)
-        {
-            throw new NullPointerException("The list of dates and times doesn't exist!");
-        }
-        else
-        {
-            memory.hasBeenTo.add(places);
-            memory.hasBeenTo.add(dateTime);
-        }
+        memory.hasBeenTo.add(places);
+        memory.hasBeenTo.add(dateTime);
     }
-    public void hasBeenTo(Place place, LocalDateTime dateTime) throws NullPointerException
+    public void hasBeenTo(Place place, LocalDateTime dateTime)
     {
-        if(place == null)
-        {
-            throw new NullPointerException("The list of places doesn't exist!");
-        }
-        else
-        {
         memory.hasBeenTo;
-        }
     }
     public Human.Memory getMemory()
     {
@@ -175,7 +140,7 @@ public class Human implements livable
         Human c = (Human) o; 
 
         if((this.name == c.getName()) && (this.getState() == c.getState())&& 
-        (this.belongings == c.getBelongings()) && (this.memory == c.getMemory())&&(this.location == c.getLocation()))
+        (this.belongings == c.getBelongings()) && (this.memory == c.getMemory())&&(this.place == c.getPlace()))
         {
             return true;
         }else
@@ -186,22 +151,15 @@ public class Human implements livable
     @Override
     public int hashCode()
     {
-        return this.name.length() + belongings.size() + memory.hashCode() + getLocation().getClass().getName().length();
+        return this.name.length() + belongings.size() + memory.hashCode() + getPlace().getClass().getName().length();
     } 
     class Memory
     {
         List <Vector> hasBeenTo = new ArrayList();
-        public Memory setHasBeenTo(Vector <Place> places, Vector <LocalDateTime> DateTime) throws NullPointerException
+        public Memory setHasBeenTo(Vector <Place> places, Vector <LocalDateTime> DateTime)
         {
-            if(places == null)
-            {
-                throw new NullPointerException("The list of Places doesn't exist!");
-            }
-            else
-            {
                 hasBeenTo = places;
                 return this;
-            }
         }
         public List<Place> getHasBeenTo()
         {
