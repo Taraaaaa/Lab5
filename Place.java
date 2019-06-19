@@ -1,58 +1,45 @@
 import java.util.*;
+import java.lang.*;
 public class Place
 {
     
     private List <Object> objects = new ArrayList<Object>();
     private List <Human> people = new ArrayList<Human>();
+    private Location location;
+    public Place(double x, double y)
+    {
+        this.location = new Location(x,y);
+    }
     
-    public Place(){}
-    
-    public void setPeople(List <Human> people) throws NullPointerException
+    public void setPeople(List <Human> people) 
     {
-        if(people == null)
-        {
-            throw new NullPointerException("The people list doesn't exist!");
-        }
-        else
-        {
-            this.people = people;
-        }
+        this.people = people;
     }
-    public void setObjects(List <Object> objects) throws NullPointerException
+    public void setObjects(List <Object> objects)
     {
-        if(objects == null)
-        {
-            throw new NullPointerException("The objects list doesn't exist!");
-        }else{
-            this.objects = objects;
-        }
+        this.objects = objects;
     }
-    public void addPerson(Human person) throws NullPointerException
+    public void addPerson(Human person) 
     {
-        if(person == null)
-        {
-            throw new NullPointerException("The person doesn't exist!");
-        }
-            this.people.add(person);
+        this.people.add(person);
     }
-    public void addObject(Object object) throws NullPointerException
+    public void addObject(Object object) 
     {
-        if (object == null)
-        {
-            throw new NullPointerException("The object doesn't exist!");
-        }
-        else{
-            this.objects.add(object);
-        }
+        this.objects.add(object);
     }
     public List<Human> getPeople()
     {
-        return people;
+        return this.people;
     }
     public List<Object> getObjects()
     {
-        return objects;
+        return this.objects;
     }
+    public Location getLocation()
+    {
+        return this.location;
+    }
+    
     @Override
     public String toString()
     {
